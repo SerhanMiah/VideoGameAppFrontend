@@ -1,87 +1,158 @@
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px;
-}
-
-.game-details {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.game-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  padding: 20px;
   color: #333;
+  font-family: 'Arial', sans-serif;
+  border-radius: 10px;
+  box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
 }
 
-.game-info {
-  margin-bottom: 20px;
+.loader, .error {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  margin: 30px 0;
 }
 
-.game-info p {
+.card-header {
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.carousel.carousel-slider .control-arrow {
+  opacity: 0.8;
+}
+
+.carousel.carousel-slider:hover .control-arrow {
+  opacity: 1;
+}
+
+.carousel .control-prev.control-arrow:before {
+  border-right: 25px solid #007BFF;
+}
+
+.carousel .control-next.control-arrow:before {
+  border-left: 25px solid #007BFF;
+}
+
+.game-summary {
+  padding-left: 20px;
+}
+
+.game-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.game-meta div {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: #555;
 }
 
-.game-info .icon {
-  margin-right: 8px;
-}
-
-.game-description {
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 20px;
-  color: #555;
-}
-
-.game-trailer {
-  margin-bottom: 20px;
-}
-
-.game-trailer h3 {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
+.game-meta .icon {
+  margin-right: 10px;
+  color: #007BFF;
 }
 
 .add-to-cart-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #007BFF;
   color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  text-decoration: none;
   border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1.2em;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-align: center;
+  border-radius: 5px;
 }
 
 .add-to-cart-btn:hover {
   background-color: #0056b3;
 }
 
-.add-to-cart-btn .icon {
-  margin-right: 8px;
+.game-trailer {
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  position: relative;
+  margin-bottom: 20px;
 }
 
-.loader {
-  text-align: center;
-  margin: 40px 0;
-  color: #888;
+.game-trailer iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border: none;
 }
 
-.error {
-  text-align: center;
-  margin: 40px 0;
-  color: #f00;
+/* New styles for a more modern look */
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-text {
+  font-size: 1.1em;
+  line-height: 1.5em;
+}
+
+h4 {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #007BFF;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.1em;
+  color: #555;
+}
+
+h3 {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #007BFF;
+  margin-bottom: 20px;
+}
+
+.list-group-item {
+  background-color: transparent;
+  border: none;
+}
+
+.list-group-item:first-child {
+  padding-top: 0;
+}
+
+.list-group-item .icon {
+  color: #333;
+}
+
+.list-group-item .full {
+  color: #007BFF;
+}
+
+.dlc-card {
+  margin-bottom: 20px;
+  border: none;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+
+.dlc-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.dlc-card .card-title {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.dlc-card .card-text {
+  font-size: 1.1em;
+  color: #555;
 }

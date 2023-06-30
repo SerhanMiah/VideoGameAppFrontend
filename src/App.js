@@ -6,6 +6,7 @@ import Game from './Components/Game';
 import GameDetail from './Components/GameDetail';
 import Register from './Components/Register.js';
 import Login from './Components/Login';
+import ProfilePage from './Components/ProfilePage';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   );

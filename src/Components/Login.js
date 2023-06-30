@@ -1,69 +1,61 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { setToken, setId } from '../Components/Helper/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const navigate = useNavigate();
+  const [user, setUser] = useState({ Email: '', Password: '' });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = e => {
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const login = () => {
+    axios.post('http://localhost:5177/api/account/login', { Email: user.Email, Password: user.Password })
 
-    try {
-      const response = await axios.post('http://localhost:5177/api/account/login', formData);
-      console.log(response.data); // Login successful message
-    } catch (error) {
-      console.error(error.response.data); // Login error message
-    }
+      .then(response => {
+        const token = response.data.token;  // Extract the token
+        console.log('Token:', token); // check the Token
+        // handle success
+        setToken(token);
+        console.log(response);
+        console.log('login successful', response);
+      })
+      .catch(error => {
+        console.log(error);
+        if (error.response) {
+
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
   };
 
   return (
-    <div className="container">
-      <form className="form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email:
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password:
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <button type="submit" className="btn btn-primary">
-            Login
-          </button>
-        </div>
-      </form>
-    </div>
+    <Container>
+      <Row className="justify-content-md-center">
+        <Col xs={12} md={6}>
+          <h1 className="text-center">Login</h1>
+          <Form>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" name="Email" placeholder="Enter email" onChange={handleChange} />
+            </Form.Group>
+
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" name="Password" placeholder="Password" onChange={handleChange} />
+            </Form.Group>
+            <Button variant="primary" type="button" onClick={login} className="w-100">
+              Login
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

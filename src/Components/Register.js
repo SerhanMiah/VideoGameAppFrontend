@@ -1,89 +1,185 @@
-import React, { useState } from 'react';
 import axios from 'axios';
+import { Col } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({
+    Email: '',
+    Password: '',
+    ConfirmPassword: '',
+    FirstName: '',
+    LastName: '',
+    Address: '',
+    City: '',
+    State: '',
+    PostalCode: '',
+    Country: ''
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const [errors, setErrors] = useState('');
+
+  const handleChange = (event) => {
+    const newObj = { ...user, [event.target.name]: event.target.value };
+    setUser(newObj);
+    setErrors('');
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5177/api/account/register', formData);
-      console.log(response.data); // Registration successful message
+      const { data } = await axios.post('http://localhost:5177/api/account/register', user);
+      console.log('User has been successfully created', data);
+      navigate('/login');
     } catch (error) {
-      console.error(error.response.data); // Registration error message
+      setErrors(error.message);
+      console.log(error.message);
     }
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email:</label>
-          <input
-            type="email"
-            id="email"
-            className="form-control"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password:</label>
-          <input
-            type="password"
-            id="password"
-            className="form-control"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">First Name:</label>
-          <input
-            type="text"
-            id="firstName"
-            className="form-control"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">Last Name:</label>
-          <input
-            type="text"
-            id="lastName"
-            className="form-control"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="text-center">
-          <button type="submit" className="btn btn-primary">Register</button>
-        </div>
-      </form>
-    </div>
+    <main className="form-page">
+      <Container className="register-form crunch-form" as="main">
+        <Row className="justify-content-md-center">
+          <Col xs={12} md={6}>
+            <h1>Register</h1>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="FirstName"
+                  placeholder="Enter your first name"
+                  value={user.FirstName}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="LastName"
+                  placeholder="Enter your last name"
+                  value={user.LastName}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="email"
+                  name="Email"
+                  placeholder="Enter your email"
+                  value={user.Email}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="password"
+                  name="Password"
+                  placeholder="Enter your password"
+                  value={user.Password}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="password"
+                  name="ConfirmPassword"
+                  placeholder="Confirm your password"
+                  value={user.ConfirmPassword}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="Address"
+                  placeholder="Enter your address"
+                  value={user.Address}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>City</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="City"
+                  placeholder="Enter your city"
+                  value={user.City}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>State</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="State"
+                  placeholder="Enter your state"
+                  value={user.State}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Postal Code</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="PostalCode"
+                  placeholder="Enter your postal code"
+                  value={user.PostalCode}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Country</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="Country"
+                  placeholder="Enter your country"
+                  value={user.Country}
+                  required
+                />
+              </Form.Group>
+
+              {errors && <p className="text-danger">{errors}</p>}
+
+              <Button variant="primary" type="submit">
+                Register
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </main>
   );
 };
 
