@@ -25,7 +25,7 @@ const NavBar = () => {
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="justify-content-between">
         <Navbar.Brand as={Link} to="/">GAME</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
@@ -36,7 +36,7 @@ const NavBar = () => {
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
             <Button variant="outline-light">Search</Button>
           </Form>
-          <Nav className="ml-auto">
+          <Nav className="flex-grow-1">
             {isAuthenticated ? (
               <>
                 <Nav.Link as={Link} to="/profile">
@@ -44,9 +44,6 @@ const NavBar = () => {
                 </Nav.Link>
                 <Nav.Link onClick={handleLogOut}>
                   <FontAwesomeIcon icon={faUser} /> Logout
-                </Nav.Link>
-                <Nav.Link as={Link} to="/cart">
-                  Cart
                 </Nav.Link>
               </>
             ) : (
@@ -57,11 +54,11 @@ const NavBar = () => {
                 <Nav.Link as={Link} to="/register">
                   <FontAwesomeIcon icon={faUser} /> Register
                 </Nav.Link>
-                <Nav.Link as={Link} to="/cart">
-                  Cart
-                </Nav.Link>
               </>
             )}
+            <Nav.Link as={Link} to="/cart">
+              Cart
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

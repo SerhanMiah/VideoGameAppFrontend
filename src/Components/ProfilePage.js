@@ -120,6 +120,7 @@ const ProfilePage = () => {
                     </div>
                   </Card.Body>
                 </Card>
+                
               </div>
             </div>
           ) : (

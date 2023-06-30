@@ -8,11 +8,9 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Container, Row, Col, Button, Card, ListGroup } from 'react-bootstrap';
 import Rating from 'react-rating';
 import { GiGamepad } from 'react-icons/gi';
-
-
+import { getToken } from './Helper/auth';
 
 import '../Style/GameDetail.css';
-
 const API_URL = "http://localhost:5177/api/game/";
 
 const GameDetail = () => {
@@ -21,6 +19,7 @@ const GameDetail = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [images, setImages] = useState([]);
+  const bearerToken = getToken();
 
   useEffect(() => {
     const fetchGameData = async () => {
@@ -39,6 +38,26 @@ const GameDetail = () => {
 
     fetchGameData();
   }, [id]);
+
+  const addToCart = async () => {
+    try {
+      const response = await fetch(`http://localhost:5177/api/cart/add/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Item added to cart:', data);
+      } else {
+        console.error('Failed to add item to cart:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
 
   if (loading) {
     return <div className="loader">Loading...</div>;
@@ -92,14 +111,13 @@ const GameDetail = () => {
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-        <Button variant="primary" className="add-to-cart-btn">
+        <Button variant="primary" className="add-to-cart-btn" onClick={addToCart}>
           <FiShoppingCart className="icon" />
           Add to Cart
         </Button>
       </Card.Footer>
     </Card>
   );
-  
 
   GameTrailer.propTypes = {
     trailerUrl: PropTypes.string
@@ -141,7 +159,7 @@ const GameDetail = () => {
                   <ListGroup.Item><FiCalendar className="icon" />{formatDate(game.releaseDate)}</ListGroup.Item>
                   <ListGroup.Item><FiBookOpen className="icon" />{game.genre}</ListGroup.Item>
                 </ListGroup>
-                <Button variant="primary" className="mt-3 add-to-cart-btn">
+                <Button variant="primary" className="mt-3 add-to-cart-btn" onClick={addToCart}>
                   <FiShoppingCart className="icon" />
                   Add to Cart
                 </Button>
@@ -209,7 +227,6 @@ const GameDetail = () => {
       </Card>
     </Container>
   );
-  
 };
 
 export default GameDetail;

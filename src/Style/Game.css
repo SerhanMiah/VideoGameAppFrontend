@@ -1,130 +1,105 @@
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 20px;
 }
 
 .loader {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 200px;
   font-size: 20px;
+  font-weight: bold;
 }
 
 .error {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 200px;
   font-size: 20px;
+  font-weight: bold;
   color: red;
 }
 
 .game-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 .game-item {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  transition: all 0.3s ease;
-  position: relative;
+  width: 100%;
+  max-width: 300px;
   height: 100%;
+  margin-bottom: 20px;
 }
 
-.game-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-}
 
 .game-link {
   text-decoration: none;
   color: inherit;
 }
 
+.game-image {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+}
+
 .game-image img {
-  width: 100%;
-  height: 200px; /* Adjust the height as needed */
+  height: 100%;
   object-fit: cover;
-  border-radius: 5px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.game-image:hover img {
+  transform: scale(1.1);
+}
+
+.game-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .game-details {
   margin-top: auto;
 }
 
-.game-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
+.game-price {
+  font-size: 14px;
+  color: #888;
   margin-bottom: 5px;
 }
 
-.game-rating {
-  font-size: 16px;
-  color: #888;
-  margin-top: 5px;
-}
-
-.game-price {
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 5px;
-  color: #007bff;
-}
-
-.game-release,
-.game-genre,
-.game-platform {
+.game-genre {
   font-size: 14px;
   color: #888;
-  margin-top: 5px;
 }
 
-.game-description {
-  font-size: 14px;
-  margin-top: 10px;
-  line-height: 1.5;
+.game-footer {
+  background-color: #f8f9fa;
+  border-top: none;
+  text-align: center;
 }
 
 .add-to-cart-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.add-to-cart-btn:hover {
-  background-color: #0056b3;
+  width: 100%;
+  border-radius: 0;
 }
 
 .load-more-btn {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
   font-size: 16px;
-  font-weight: bold;
+  background-color: #007bff;
   border: none;
-  border-radius: 5px;
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .load-more-btn:hover {
-  background-color: #0056b3;
+  background-color: #0069d9;
 }
