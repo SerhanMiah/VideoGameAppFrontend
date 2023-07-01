@@ -1,40 +1,22 @@
 .container {
-  padding: 20px;
-}
-
-.loader {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 200px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.error {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  font-size: 20px;
-  font-weight: bold;
-  color: red;
+  padding: 2rem;
 }
 
 .game-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
 .game-item {
-  width: 100%;
-  max-width: 300px;
-  height: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease-in-out;
 }
 
+.game-item:hover {
+  transform: scale(1.03);
+}
 
 .game-link {
   text-decoration: none;
@@ -42,62 +24,65 @@
 }
 
 .game-image {
+  height: 0;
+  padding-bottom: 56.25%;  /* Ratio for 16:9 */
   position: relative;
   overflow: hidden;
-  height: 200px;
 }
 
-.game-image img {
+.game-image .card-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease-in-out;
-}
-
-.game-image:hover img {
-  transform: scale(1.1);
 }
 
 .game-title {
-  font-size: 18px;
+  margin: 1rem 0;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .game-details {
-  margin-top: auto;
-}
-
-.game-price {
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 5px;
-}
-
-.game-genre {
-  font-size: 14px;
-  color: #888;
-}
-
-.game-footer {
-  background-color: #f8f9fa;
-  border-top: none;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
 }
 
 .add-to-cart-btn {
   width: 100%;
-  border-radius: 0;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.add-to-cart-btn:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.loader {
+  margin-top: 3rem;
+  color: #007bff;
+}
+
+.error {
+  margin-top: 3rem;
+  color: #dc3545;
 }
 
 .load-more-btn {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  font-size: 16px;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #fff;
   background-color: #007bff;
   border: none;
-  color: #fff;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .load-more-btn:hover {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { setToken, setId } from '../Components/Helper/auth';
+import { setUserSession, setToken, setId } from '../Components/Helper/auth';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -14,25 +14,27 @@ const Login = () => {
 
   const login = () => {
     axios.post('http://localhost:5177/api/account/login', { Email: user.Email, Password: user.Password })
-
       .then(response => {
         const token = response.data.token;  // Extract the token
-        console.log('Token:', token); // check the Token
+        const userInfo = response.data; // Extract user info, adjust according to your API response structure
+  
         // handle success
-        setToken(token);
+        setUserSession(token, userInfo);
         console.log(response);
         console.log('login successful', response);
       })
       .catch(error => {
+        // handle error
         console.log(error);
         if (error.response) {
-
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
         }
       });
   };
+  
+  
 
   return (
     <Container>

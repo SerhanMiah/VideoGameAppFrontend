@@ -1,39 +1,45 @@
-
-import { Buffer } from 'buffer'
-
 export const setToken = (token) => {
-  window.localStorage.setItem('local-user-Token', token)
-}
+  window.localStorage.setItem('local-user-Token', token);
+};
+
 export const setId = (id) => {
-  window.localStorage.setItem('local-user-Id', id)
-}
+  window.localStorage.setItem('local-user-Id', id);
+};
 
 export const getToken = () => {
-  return window.localStorage.getItem('local-user-Token')
-}
+  return window.localStorage.getItem('local-user-Token');
+};
 
 export const getId = () => {
-  return window.localStorage.getItem('local-user-Id')
-}
+  return window.localStorage.getItem('local-user-Id');
+};
 
-export const getPayLoad = () => {
-  const token = getToken()
-  console.log(token)
-  if (!token) return 
-  const splitToken = token.split('.')
-  if (splitToken.length !== 3) return 
-  return JSON.parse(Buffer.from(splitToken[1], 'base64'))
-}
+export const getUserInfo = () => {
+  const userInfo = localStorage.getItem('userInfo');
+  return userInfo ? JSON.parse(userInfo) : null;
+};
 
-export const userIsAuthenticated = () => {
-  const payload = getPayLoad()
-  if (!payload) return 
-  const currentTime = Math.round(Date.now() / 1000) 
-  return currentTime < payload.exp
-}
+export const setUserInfo = (userInfo) => {
+  const data = JSON.stringify(userInfo);
+  window.localStorage.setItem('userInfo', data);
+};
+
+export const setUserSession = (token, userInfo) => {
+  setToken(token);
+  setUserInfo(userInfo);
+};
+
+export const clearUserSession = () => {
+  window.localStorage.removeItem('local-user-Token');
+  window.localStorage.removeItem('local-user-Id');
+  window.localStorage.removeItem('userInfo');
+};
 
 export const userIsOwner = (item) => {
-  const payload = getPayLoad()
-  if (!payload) return
-  return payload.userId === item.createdBy //to string was at the ebd 
-}
+  const userInfo = getUserInfo();
+  return userInfo && userInfo.userId === item.createdBy.toString();
+};
+
+export const userIsAuthenticated = () => {
+  return getToken() !== null && getUserInfo() !== null;
+};

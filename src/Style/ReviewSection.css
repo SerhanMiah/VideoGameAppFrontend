@@ -1,0 +1,27 @@
+.review-section {
+  margin: 20px 0;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px 0;
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating .star {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.star-rating .star:hover {
+  color: #ffc107;
+}
+
+.card {
+  margin-bottom: 20px;
+}

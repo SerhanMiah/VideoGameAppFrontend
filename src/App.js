@@ -7,7 +7,7 @@ import GameDetail from './Components/GameDetail';
 import Register from './Components/Register.js';
 import Login from './Components/Login';
 import ProfilePage from './Components/ProfilePage';
-import ShoppingCart from './Components/ShoppingCart';
+import ShoppingCart from './Components/Cart/ShoppingCart';
 
 function App() {
   return (
@@ -22,10 +22,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<ProfilePage />} />
 
-
         <Route path="/cart" element={<ShoppingCart />} />
 
       </Routes>
+
+
     </Router>
   );
 }
