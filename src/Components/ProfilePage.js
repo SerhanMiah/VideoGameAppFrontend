@@ -9,7 +9,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import mainPicture from '../img/3915806 (1).jpg';
-import '../Style/ProfilePage.css';
+import '../Style/ProfilePage.scss';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const ProfilePage = () => {
         };
         const { data } = await axios.get('http://localhost:5177/api/account/profile', config);
         setUserProfile(data);
-
+        console.log(data)
         // Fetch user reviews
         const reviewsData = await axios.get(`http://localhost:5177/api/reviews/user/${data.id}`, config);
         setReviews(reviewsData.data);

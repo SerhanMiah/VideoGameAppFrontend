@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import '../Style/NavBar.scss';
 
 import { userIsAuthenticated, getUserInfo } from './Helper/auth';
 
@@ -19,7 +20,7 @@ const NavBar = () => {
   useEffect(() => {
     const getSearchResults = async () => {
       try {
-        if(searchQuery !== '') {
+        if (searchQuery !== '') {
           const res = await axios.get(`http://localhost:5177/api/games/search?title=${searchQuery}`);
           setSearchResults(res.data);
         } else {
@@ -49,20 +50,34 @@ const NavBar = () => {
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="justify-content-between">
-        <Navbar.Brand as={Link} to="/">GAME</Navbar.Brand>
+      <Navbar bg="dark" variant="dark" expand="lg" className="navbar">
+        <Navbar.Brand as={Link} to="/" className="navbar-brand">
+          GAME
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/game">Game</Nav.Link>
+            <Nav.Link as={Link} to="/game" className="nav-link">
+              Game
+            </Nav.Link>
           </Nav>
           <Form inline className="searchForm">
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" value={searchQuery} onChange={handleSearchChange} />
-            <Button variant="outline-light">Search</Button>
+            <FormControl
+              type="text"
+              placeholder="Search"
+              className="mr-sm-2 form-control"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+            <Button variant="outline-light" className="btn">
+              Search
+            </Button>
             <Dropdown>
               <Dropdown.Menu>
-                {searchResults.map(result => (
-                  <Dropdown.Item as={Link} to={`/game/${result.id}`} key={result.id}>{result.title}</Dropdown.Item>
+                {searchResults.map((result) => (
+                  <Dropdown.Item as={Link} to={`/game/${result.id}`} key={result.id}>
+                    {result.title}
+                  </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
             </Dropdown>
@@ -70,24 +85,28 @@ const NavBar = () => {
           <Nav className="flex-grow-1">
             {isAuthenticated ? (
               <>
-                <Nav.Link as={Link} to="/profile">
-                  <FontAwesomeIcon icon={faUser} /> Profile
+                <Nav.Link as={Link} to="/profile" className="nav-link">
+                  <FontAwesomeIcon icon={faUser} />
+                  Profile
                 </Nav.Link>
-                <Nav.Link onClick={handleLogOut}>
-                  <FontAwesomeIcon icon={faUser} /> Logout
+                <Nav.Link onClick={handleLogOut} className="nav-link">
+                  <FontAwesomeIcon icon={faUser} />
+                  Logout
                 </Nav.Link>
               </>
             ) : (
               <>
-                <Nav.Link as={Link} to="/login">
-                  <FontAwesomeIcon icon={faUser} /> Login
+                <Nav.Link as={Link} to="/login" className="nav-link">
+                  <FontAwesomeIcon icon={faUser} />
+                  Login
                 </Nav.Link>
-                <Nav.Link as={Link} to="/register">
-                  <FontAwesomeIcon icon={faUser} /> Register
+                <Nav.Link as={Link} to="/register" className="nav-link">
+                  <FontAwesomeIcon icon={faUser} />
+                  Register
                 </Nav.Link>
               </>
             )}
-            <Nav.Link as={Link} to="/cart">
+            <Nav.Link as={Link} to="/cart" className="nav-link">
               Cart
             </Nav.Link>
           </Nav>
@@ -96,6 +115,6 @@ const NavBar = () => {
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={true} />
     </>
   );
-}
+};
 
 export default NavBar;

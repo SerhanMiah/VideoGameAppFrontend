@@ -8,14 +8,16 @@
 
 .home-content {
   text-align: center;
-}
-.home-content .title {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-.home-content .subtitle {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
+
+  .title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
 }
 
 .explore-button {
@@ -29,10 +31,12 @@
   border-radius: 4px;
   text-decoration: none;
   transition: background-color 0.3s ease;
+
+  .gamepad-icon {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    background-color: #0056b3;
+  }
 }
-.explore-button .gamepad-icon {
-  margin-right: 0.5rem;
-}
-.explore-button:hover {
-  background-color: #0056b3;
-}/*# sourceMappingURL=Home.css.map */

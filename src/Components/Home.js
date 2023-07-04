@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { GiGamepad } from 'react-icons/gi';
-import '../Style/Home.css';
+import '../Style/Home.scss';
 
 const Home = () => {
   return (

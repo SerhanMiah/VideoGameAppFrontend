@@ -5,12 +5,12 @@ import { useParams } from 'react-router-dom';
 import { FiStar, FiDollarSign, FiCalendar, FiBookOpen, FiShoppingCart, FiHeart } from 'react-icons/fi';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Container, Row, Col, Button, Card, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, ListGroup, Spinner, Alert, Modal } from 'react-bootstrap';
 import Rating from 'react-rating';
 import ReviewSection from '../Components/Review/ReviewSection';
 
-import '../Style/GameDetail.css';
-import { getUserInfo, userIsAuthenticated } from './Helper/auth';
+import '../Style/GameDetail.scss';
+import { getUserInfo, userIsAuthenticated } from '../Components/Helper/auth';
 
 const API_URL = 'http://localhost:5177/api/game/';
 const SHOPPING_CART_API_URL = 'http://localhost:5177/api/ShoppingCart/AddToCart';
@@ -23,13 +23,14 @@ const GameDetail = () => {
   const [error, setError] = useState(null);
   const [images, setImages] = useState([]);
   const [message, setMessage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
 
   useEffect(() => {
     const fetchGameData = async () => {
       try {
         setLoading(true);
         const response = await axios.get(`${API_URL}${id}`);
-        console.log(response.data);
         setGame(response.data);
         setImages(response.data.gameImages.$values);
       } catch (error) {
@@ -44,21 +45,27 @@ const GameDetail = () => {
 
   useEffect(() => {
     const userInfo = getUserInfo();
-    console.log('User Info:', userInfo);
+    // console.log('User Info:', userInfo);
   }, []);
 
   const addToCart = async () => {
     const userInfo = getUserInfo();
-    const token = userInfo ? userInfo.token : null; // Retrieve the token from the user info
-  
-    if (userInfo && token) {
+    const token = userInfo ? userInfo.token : null;
+    const userId = userInfo ? userInfo.id : null;
+
+    if (!userIsAuthenticated()) {
+      setMessage('User must be logged in to add items to the cart.');
+      return;
+    }
+
+    if (game.id && userId && token) {
       try {
         const response = await axios.post(
           SHOPPING_CART_API_URL,
           {
             gameId: game.id,
             quantity: 1,
-            userId: userInfo.id,
+            userId: userId,
           },
           {
             headers: {
@@ -66,33 +73,37 @@ const GameDetail = () => {
             },
           }
         );
-        console.log('User Info:', userInfo);
-        console.log(response);
-  
+
         if (response.status === 200) {
           console.log('Game successfully added to cart');
+          setMessage('Game successfully added to cart');
         } else {
-          console.error('Failed to add game to cart');
+          throw new Error('Failed to add game to cart');
         }
       } catch (error) {
         console.error('Error adding game to cart:', error);
+        setMessage('Error adding game to cart');
       }
-    } else {
-      console.log('User must be logged in to add items to the cart.');
     }
   };
 
   const addToWishlist = async () => {
     const userInfo = getUserInfo();
-    const token = userInfo ? userInfo.token : null; // Retrieve the token from the user info
-  
-    if (userInfo && token) {
+    const token = userInfo ? userInfo.token : null;
+    const userId = userInfo ? userInfo.id : null;
+
+    if (!userIsAuthenticated()) {
+      setMessage('User must be logged in to add items to the wishlist.');
+      return;
+    }
+
+    if (userId && token) {
       try {
         const response = await axios.post(
           WISHLIST_API_URL,
           {
             gameId: game.id,
-            userId: userInfo.id,
+            userId: userId,
           },
           {
             headers: {
@@ -100,35 +111,52 @@ const GameDetail = () => {
             },
           }
         );
-        console.log('User Info:', userInfo);
-        console.log(response);
-  
+
         if (response.status === 200) {
           console.log('Game successfully added to wishlist');
           setMessage('Game added to wishlist');
         } else {
-          console.error('Failed to add game to wishlist');
-          setMessage('Failed to add game to wishlist');
+          throw new Error('Failed to add game to wishlist');
         }
       } catch (error) {
-        console.error('Error adding game to wishlist:', error);
+        console.error('Error adding game to wishlist:', error.message);
         setMessage('Error adding game to wishlist');
       }
-    } else {
-      console.log('User must be logged in to add items to the wishlist.');
     }
+  };
+  
+
+  const openImageModal = (image) => {
+    setSelectedImage(image);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   if (loading) {
-    return <div className="loader">Loading...</div>;
+    return (
+      <div className="loader">
+        <Spinner animation="border" />
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return (
+      <div className="error">
+        <Alert variant="danger">{error}</Alert>
+      </div>
+    );
   }
 
   if (!game) {
-    return <div className="error">Game not found</div>;
+    return (
+      <div className="error">
+        <Alert variant="warning">Game not found</Alert>
+      </div>
+    );
   }
 
   const formatDate = (dateString) => {
@@ -163,15 +191,11 @@ const GameDetail = () => {
     <Card className="dlc-card">
       <Card.Body>
         <Card.Title>{dlc.dlcName}</Card.Title>
-        <Card.Text>
-          Release Date: {formatDate(dlc.releaseDate)}
-        </Card.Text>
-        <Card.Text>
-          Price: ${dlc.price.toFixed(2)}
-        </Card.Text>
+        <Card.Text>Release Date: {formatDate(dlc.releaseDate)}</Card.Text>
+        <Card.Text>Price: ${dlc.price.toFixed(2)}</Card.Text>
       </Card.Body>
       <Card.Footer>
-        <Button variant="primary" className="add-to-cart-btn" onClick={addToCart}>
+        <Button variant="primary" className="add-to-cart-btn" onClick={addToCart} disabled={!userIsAuthenticated()}>
           <FiShoppingCart className="icon" />
           Add to Cart
         </Button>
@@ -180,11 +204,11 @@ const GameDetail = () => {
   );
 
   GameTrailer.propTypes = {
-    trailerUrl: PropTypes.string
+    trailerUrl: PropTypes.string,
   };
 
   DlcCard.propTypes = {
-    dlc: PropTypes.object.isRequired
+    dlc: PropTypes.object.isRequired,
   };
 
   return (
@@ -192,13 +216,15 @@ const GameDetail = () => {
       {message && <div className="message">{message}</div>}
       <GameTrailer trailerUrl={game?.trailerUrl} />
       <Card className="game-card">
-        <Card.Header as="h1" className="game-title">{game?.title}</Card.Header>
+        <Card.Header as="h1" className="game-title">
+          {game?.title}
+        </Card.Header>
         <Card.Body>
           <Row>
             <Col xs={12} md={6}>
               <Carousel showThumbs={false} dynamicHeight={false} className="game-carousel">
                 {images.map((image) => (
-                  <div key={image.id}>
+                  <div key={image.id} onClick={() => openImageModal(image.url)}>
                     <img src={image.url} alt="Game Screenshot" className="game-screenshot" />
                   </div>
                 ))}
@@ -216,24 +242,29 @@ const GameDetail = () => {
                       readonly
                     />
                   </ListGroup.Item>
-                  <ListGroup.Item><FiDollarSign className="icon" />${game?.price.toFixed(2)}</ListGroup.Item>
-                  <ListGroup.Item><FiCalendar className="icon" />{formatDate(game?.releaseDate)}</ListGroup.Item>
-                  <ListGroup.Item><FiBookOpen className="icon" />{game?.genre}</ListGroup.Item>
+                  <ListGroup.Item>
+                    <FiDollarSign className="icon" />
+                    ${game?.price.toFixed(2)}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <FiCalendar className="icon" />
+                    {formatDate(game?.releaseDate)}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <FiBookOpen className="icon" />
+                    {game?.genre}
+                  </ListGroup.Item>
                 </ListGroup>
-                <Button 
-                  variant="primary" 
-                  className="mt-3 add-to-cart-btn" 
-                  onClick={() => {
-                    if (!userIsAuthenticated()) {
-                      setMessage('User must be logged in to add items to the cart.');
-                      return;
-                    }
-                    addToCart();
-                  }}
+                <Button
+                  variant="primary"
+                  className="mt-3 add-to-cart-btn"
+                  onClick={addToCart}
+                  disabled={!userIsAuthenticated()}
                 >
                   <FiShoppingCart className="icon" />
                   Add to Cart
                 </Button>
+
                 <Button
                   variant="outline-primary"
                   className="mt-3 add-to-wishlist-btn"
@@ -251,9 +282,7 @@ const GameDetail = () => {
               </div>
             </Col>
           </Row>
-          <Card.Text className="mt-3 game-description">
-            {game?.description}
-          </Card.Text>
+          <Card.Text className="mt-3 game-description">{game?.description}</Card.Text>
           <Row className="mt-3">
             <Col xs={12} md={4}>
               <div className="section">
@@ -313,6 +342,21 @@ const GameDetail = () => {
           )}
         </Card.Body>
       </Card>
+
+      {/* Image Modal */}
+      <Modal show={showModal} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Game Screenshot</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <img src={selectedImage} alt="Game Screenshot" className="modal-image" />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

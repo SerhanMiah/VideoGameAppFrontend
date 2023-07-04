@@ -4,7 +4,7 @@
 
 .message {
   margin: 1rem 0;
-  color: #dc3545;
+  color: #dc3545; // Error red color
 }
 
 .game-card {
@@ -16,20 +16,23 @@
 .game-title {
   text-align: center;
   font-size: 2rem;
-  color: #007bff;
+  color: #007bff; // Primary blue color
 }
 
 .game-details {
   margin-top: 2rem;
-}
-.game-details .icon {
-  margin-right: 0.5rem;
-}
-.game-details .icon.empty {
-  color: #6c757d;
-}
-.game-details .icon.full {
-  color: #ffc107;
+
+  .icon {
+    margin-right: 0.5rem;
+  }
+
+  .icon.empty {
+    color: #6c757d; // Gray color
+  }
+
+  .icon.full {
+    color: #ffc107; // Yellow color
+  }
 }
 
 .game-description {
@@ -46,42 +49,44 @@
 .game-trailer {
   width: 100%;
   height: 0;
-  padding-bottom: 56.25%;
+  padding-bottom: 56.25%; // Aspect ratio for 16:9
   position: relative;
-}
-.game-trailer iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .section {
   padding: 1rem;
-  border: 1px solid #dee2e6;
+  border: 1px solid #dee2e6; // Gray color
   border-radius: 0.25rem;
 }
 
 .section-title {
   margin-bottom: 1rem;
   font-size: 1.2rem;
-  color: #007bff;
+  color: #007bff; // Primary blue color
 }
 
 .dlc-card {
   margin-bottom: 2rem;
   transition: transform 0.3s ease-in-out;
-}
-.dlc-card:hover {
-  transform: scale(1.03);
+
+  &:hover {
+    transform: scale(1.03);
+  }
 }
 
 .dlc-title {
   margin-top: 2rem;
   text-align: center;
   font-size: 1.8rem;
-  color: #007bff;
+  color: #007bff; // Primary blue color
 }
 
 .add-to-cart-btn {
@@ -89,14 +94,16 @@
   color: #fff;
   background-color: #007bff;
   border-color: #007bff;
-}
-.add-to-cart-btn .icon {
-  margin-right: 0.5rem;
-}
-.add-to-cart-btn:hover {
-  color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+
+  .icon {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
 }
 
 .loader {
@@ -112,29 +119,32 @@
 .wishlist-card {
   margin-bottom: 2rem;
   transition: transform 0.3s ease-in-out;
-}
-.wishlist-card:hover {
-  transform: scale(1.03);
+
+  &:hover {
+    transform: scale(1.03);
+  }
 }
 
 .wishlist-title {
   margin-top: 2rem;
   text-align: center;
   font-size: 1.8rem;
-  color: #007bff;
+  color: #007bff; // Primary blue color
 }
 
 .add-to-wishlist-btn {
   width: 100%;
   color: #fff;
-  background-color: #28a745;
+  background-color: #28a745; // Success green color
   border-color: #28a745;
+
+  .icon {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    color: #fff;
+    background-color: #218838; // Darker shade of success green color
+    border-color: #1e7e34; // Darker shade of success green color
+  }
 }
-.add-to-wishlist-btn .icon {
-  margin-right: 0.5rem;
-}
-.add-to-wishlist-btn:hover {
-  color: #fff;
-  background-color: #218838;
-  border-color: #1e7e34;
-}/*# sourceMappingURL=GameDetail.css.map */

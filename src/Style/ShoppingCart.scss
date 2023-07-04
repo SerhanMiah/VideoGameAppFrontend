@@ -32,8 +32,7 @@
 .item-image {
   width: 80px;
   height: 80px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   margin-right: 20px;
 }
 
@@ -97,4 +96,4 @@
 
 .checkout-button:hover {
   background-color: #ff8c00;
-}/*# sourceMappingURL=ShoppingCart.css.map */
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Card, Button, Row, Col } from 'react-bootstrap';
-import '../Style/Game.css';
+import '../Style/Game.scss';
 
 const Game = () => {
   const [games, setGames] = useState([]);

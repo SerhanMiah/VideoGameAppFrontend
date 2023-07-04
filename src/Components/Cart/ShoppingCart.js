@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../Style/ShoppingCart.css';
+import '../../Style/ShoppingCart.scss';
 import { getToken, userIsAuthenticated } from '../Helper/auth';
 
 const ShoppingCart = () => {

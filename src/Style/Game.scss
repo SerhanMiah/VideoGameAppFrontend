@@ -1,0 +1,90 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+
+  .game-grid {
+    margin-top: 2rem;
+  }
+
+  .game-item {
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  .game-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .game-image {
+    height: 0;
+    padding-bottom: 56.25%; // Ratio for 16:9
+    position: relative;
+    overflow: hidden;
+
+    .card-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .game-title {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .game-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+
+    &:hover {
+      color: #fff;
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+  }
+
+  .loader {
+    margin-top: 3rem;
+    color: #007bff;
+  }
+
+  .error {
+    margin-top: 3rem;
+    color: #dc3545;
+  }
+
+  .load-more-btn {
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0069d9;
+    }
+  }
+}
